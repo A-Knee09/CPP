@@ -70,7 +70,7 @@ void DeleteNode(int pos, Node *&head)
     if (pos == 1)
     {
         Node *temp = head;
-        head = temp->next;
+        head = head->next;
         // Memory free;
         delete temp;
     }
