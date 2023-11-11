@@ -1,131 +1,168 @@
 #include <iostream>
 using namespace std;
 
-class Node // Define what a node is;
+class Node // Class to define what a node is.
 {
-
 public:
-    int data;      // A node will contain some data;
-    Node *next;    // A node will contain a pointer 'next' that points to the next node;
-    Node(int data) // Parameterized constructor;
+    int data;   // Data for node
+    Node *next; // pointer pointing to the memory address of next node.
+
+    Node(int d) // Constructor
     {
-        this->data = data;
-        this->next = NULL; // A new node will always point to NULL;
+        this->data = d;
+        this->next = NULL;
     }
-    ~Node() // Destructor to free memory;
+
+    ~Node() // Destructor
     {
-        int val = this->data; // Optional
-        // Memory free;
         if (this->next != NULL)
         {
             delete next;
             this->next = NULL;
         }
-
-        cout << "Memory has been freed for data: " << val << endl;
     }
 };
 
-void InsHead(Node *&head, int d) // Function for Inserting a node at head;
+class Single // Seperate class for all single linked list function.
 {
-    Node *temp = new Node(d); // Create a new Node "temp' that is to be inserted at beginning of the list;
-    temp->next = head;        // New node 'temp' next pointer will point to the head node;
-    head = temp;              // Now the new node 'temp' which was inserted at the beginning will be the head node;
-}
-
-void InsTail(Node *&tail, int d) // Functoin for inserting a node at tail;
-{
-    Node *temp = new Node(d); // // Create a new Node "temp' that is to be inserted at end of the list(tail);
-    tail->next = temp;        // tail node next pointer should point to the temp;
-    tail = temp;              // Now the new node temp will be the tail of the linked list;
-}
-void InsAtPos(Node *&head, int pos, int d) // A function to insert a node at any pos of LL;
-{
-    if (pos == 1)
+public:
+    void InsHead(Node *&head, int d) // Function to insert a node at the beginning of the list or head of the Linked list.
     {
-        InsHead(head, d); // In case the user requires to ins a node at start ,we call the InsAtHead func;
-        return;
-    }
-
-    Node *temp = head;
-    int count = 1;
-
-    while (count < pos - 1)
-    {
-        temp = temp->next;
-        count++;
-    }
-
-    Node *NodeToIns = new Node(d);
-
-    NodeToIns->next = temp->next;
-    temp->next = NodeToIns;
-}
-
-void DeleteNode(int pos, Node *&head)
-{
-    // Deletion of first Node;
-    if (pos == 1)
-    {
-        Node *temp = head;
-        head = head->next;
-        temp->next = NULL;
-        // Memory free;
-        delete temp;
-        return;
-    }
-    // Deletion of other node;
-    else
-    {
-        Node *curr = head;
-        Node *prev = NULL;
-
-        int count = 1;
-        while (count < pos)
+        Node *t = head;
+        if (t == NULL) // If there is no Node at the beginning of the list
         {
-            prev = curr;
-            curr = curr->next;
-            count++;
+            Node *temp = new Node(d); // create a new node 'temp'
+            head = temp;              // New Node(temp) is now the head of LL.
         }
 
-        prev->next = curr->next;
-        curr->next = NULL;
-        delete curr;
+        else // If the list is not empty
+        {
+            Node *temp = new Node(d); // Create a new Node 'temp'
+            temp->next = head;        // New Node(temp) next pointer should point to the orignal head of the list.
+            head = temp;              // New Node(temp) should now be assigned as the head of list.
+        }
     }
-}
 
-void PrintLL(Node *&head) // Function to print the list;
-{
-    Node *temp = head;   // Create a pointer that will point to the head of the list;
-    while (temp != NULL) // While the pointer is not NULL;
+    void InsTail(Node *&tail, int d) // Function to insert a node at end or tail of the linked list.
     {
-        cout << temp->data << " "; // Print the data ;
-        temp = temp->next;         // Increment the position of temp;
+        if (tail == NULL) // If the list is empty
+        {
+            Node *temp = new Node(d); // Create a new Node 'temp'
+            tail = temp;              // New Node(temp) is now the tail of the linked list.
+        }
+
+        else // If the list is not empty
+        {
+            Node *temp = new Node(d); // Create a new Node 'temp'
+            tail->next = temp;        // Point the next pointer of the orignal tail to New Node(temp)
+            tail = temp;              // New Node(temp)should now be assigned as the tail of the linked list.
+        }
     }
-}
+
+    void InsAtPos(Node *&head, int pos, int d) // Function to insert a node at any position.
+    {
+        if (pos == 1) // If node is to be inserted at the beginning of the list
+        {
+            InsHead(head, d); // Call the InsHead function
+            return;
+        }
+        else // If node is to be inserted at any other position
+        {
+            Node *temp = head; // Create a pointer temp that points to head of the linked list
+            int count = 1;
+            while (count < pos - 1) // While loop to traverse to the node before desired insertion position
+            {
+                temp = temp->next; // traverse by incrementing the position.
+                count++;
+            }
+            Node *NTI = new Node(d); // Once the desired position has been reached create a new node NTI
+            temp->next = NTI;        // The node before the desired position or temp's next pointer should point to our new Node
+            NTI->next = temp->next;  // New Node NTI next pointer should point to temp's next node.
+        }
+    }
+
+    void Delete(Node *&head, int pos) // Function to delete a node.
+    {
+        if (pos == 1) // If the node to be deleted is at the head or beginning of the linked list
+        {
+            Node *temp = head; // Create a pointer temp that points to head of the linked list (selects the head of the list)
+            head = temp->next; // Assign Head to next position
+            temp->next = NULL; // Original head next pointer should point to NULL
+            delete temp;       // Delete the orignal head.
+        }
+        else if (head == NULL) // If there are no nodes in linked list.
+        {
+            cout << "List is Empty can't ,delete the element at pos " << pos << endl; // Display this message
+        }
+
+        else // If the desired position is something other than first one
+        {
+            int count = 1;
+            Node *curr = head; // create a pointer curr that points to head of Linked list
+            Node *prev = NULL; // create a pointer prev that points to NULL
+
+            while (count < pos && curr != NULL) // traverse the list to desired position
+            {
+                prev = curr;       // prev and curr are at same position
+                curr = curr->next; // curr is incremented
+                count++;
+            }
+            if (curr == NULL) // if position entered in the list is not present
+            {
+                cout << "Exceeding list limit. Please redefine Position." << endl; // Display this message
+                return;
+            }
+            prev->next = curr->next;
+            curr->next = NULL;
+            delete curr;
+        }
+    }
+
+    void Display(Node *&head) // Function to display All the elements
+    {
+        Node *temp = head; // Create pointer temp that points to head of the list.
+        if (temp == NULL)  // If list is empty
+        {
+            cout << "No elements to display , List is empty." << endl; // Display this message.
+        }
+        while (temp != NULL) // While loop to traverse the list
+        {
+            cout << temp->data << " -> "; // Display data of the list
+            temp = temp->next;            // increment the node position
+        }
+        cout << "NULL" << endl;
+    }
+
+    int GetLen(Node *&head) // Function to return the lenght of the list.
+    {
+        Node *temp = head;
+        int len = 0;
+        while (temp != NULL)
+        {
+            len++;
+            temp = temp->next;
+        }
+        cout << "The length of the list is " << len << endl;
+        return len;
+    }
+};
 
 int main()
 {
-    Node *N1 = new Node(10);
+    Node *N1 = new Node(0);
     Node *head = N1;
     Node *tail = N1;
-    // InsHead(head , 20);
-    // InsHead(head , 30);
-    // InsHead(head , 40);
-    // InsHead(head , 50);
-    // PrintLL(head);
-    // cout << endl;
-    // DeleteNode(2 , head);
-    // PrintLL(head);
-    // DeleteNode(4,head);
-    // PrintLL(head);
-    InsTail(tail, 90);
-    InsTail(tail, 20);
-    InsTail(tail, 30);
-    InsTail(tail, 40);
-    InsTail(tail, 50);
-    PrintLL(head);
-    cout << endl;
-    DeleteNode(1, head);
-    PrintLL(head);
+    Single *s1 = new Single;
+    s1->Display(head);
+    s1->Delete(head, 1);
+    s1->Display(head);
+    s1->GetLen(head);
+    s1->InsHead(head, 10);
+    s1->InsTail(tail, 20);
+    s1->InsTail(tail, 30);
+    s1->InsTail(tail, 40);
+    s1->InsTail(tail, 50);
+    s1->Display(head);
+    s1->GetLen(head);
+    s1->Delete(head, 8);
 }
