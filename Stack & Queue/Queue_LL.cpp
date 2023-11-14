@@ -49,12 +49,9 @@ public:
         else
         {
             Node *temp = front;
-            if (front != NULL)
-            {
-                front = temp->next;
-                temp->next = NULL;
-                delete temp;
-            }
+            front = temp->next;
+            temp->next = NULL;
+            delete temp;
         }
     }
 
