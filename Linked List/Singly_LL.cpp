@@ -28,34 +28,24 @@ class Single // Seperate class for all single linked list function.
 public:
     void InsHead(Node *&head, int d) // Function to insert a node at the beginning of the list or head of the Linked list.
     {
-        Node *t = head;
-        if (t == NULL) // If there is no Node at the beginning of the list
-        {
-            Node *temp = new Node(d); // create a new node 'temp'
-            head = temp;              // New Node(temp) is now the head of LL.
-        }
 
-        else // If the list is not empty
-        {
-            Node *temp = new Node(d); // Create a new Node 'temp'
-            temp->next = head;        // New Node(temp) next pointer should point to the orignal head of the list.
-            head = temp;              // New Node(temp) should now be assigned as the head of list.
-        }
+        Node *temp = new Node(d); // Create a new Node 'temp'
+        temp->next = head;        // New Node(temp) next pointer should point to the orignal head of the list.
+        head = temp;              // New Node(temp) should now be assigned as the head of list.
     }
 
-    void InsTail(Node *&tail, int d) // Function to insert a node at end or tail of the linked list.
+    void InsTail(Node *&head, Node *&tail, int d) // Function to insert a node at end or tail of the linked list.
     {
-        if (tail == NULL) // If the list is empty
+        Node *temp = new Node(d); // Create a new Node 'temp'
+        if (tail == NULL)         // If the list is empty
         {
-            Node *temp = new Node(d); // Create a new Node 'temp'
-            tail = temp;              // New Node(temp) is now the tail of the linked list.
+            head = tail = temp; // New Node(temp) is now the tail of the linked list.
         }
 
         else // If the list is not empty
         {
-            Node *temp = new Node(d); // Create a new Node 'temp'
-            tail->next = temp;        // Point the next pointer of the orignal tail to New Node(temp)
-            tail = temp;              // New Node(temp)should now be assigned as the tail of the linked list.
+            tail->next = temp; // Point the next pointer of the orignal tail to New Node(temp)
+            tail = temp;       // New Node(temp)should now be assigned as the tail of the linked list.
         }
     }
 
@@ -149,20 +139,20 @@ public:
 
 int main()
 {
-    Node *N1 = new Node(0);
-    Node *head = N1;
-    Node *tail = N1;
+    // Node *N1 = new Node(0);
+    Node *head = NULL;
+    Node *tail = NULL;
     Single *s1 = new Single;
+    s1->Display(head);
+    s1->InsTail(head, tail, 20);
+    s1->InsTail(head, tail, 30);
+    s1->InsTail(head, tail, 40);
+    s1->InsTail(head, tail, 50);
+    s1->Delete(head, 1);
     s1->Display(head);
     s1->Delete(head, 1);
     s1->Display(head);
     s1->GetLen(head);
-    s1->InsHead(head, 10);
-    s1->InsTail(tail, 20);
-    s1->InsTail(tail, 30);
-    s1->InsTail(tail, 40);
-    s1->InsTail(tail, 50);
-    s1->Display(head);
-    s1->GetLen(head);
-    s1->Delete(head, 8);
+    // s1->Delete(head, 1);
+    // s1->Display(head);
 }
