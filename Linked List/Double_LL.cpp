@@ -16,27 +16,41 @@ public:
     }
 };
 
-void InsHead(Node *&head, int d) // Function for Inserting a node at head;
+void InsHead(Node *&head, Node *&tail, int d) // Function for Inserting a node at head;
 {
     Node *temp = new Node(d); // Create a new Node "temp' that is to be inserted at beginning of the list(head);
-    temp->next = head;        // New node 'temp' next pointer will point to the head node;
-    head->prev = temp;        // Head node prev pointer will point to the new node inserted before it;
-    head = temp;              // Now the new node 'temp' will be the head node;
+    if (head == NULL)
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        temp->next = head; // New node 'temp' next pointer will point to the head node;
+        head->prev = temp; // Head node prev pointer will point to the new node inserted before it;
+        head = temp;       // Now the new node 'temp' will be the head node;
+    }
 }
 
-void InsTail(Node *&tail, int d)
+void InsTail(Node *&head, Node *&tail, int d)
 {
     Node *temp = new Node(d); // Create a new Node "temp' that is to be inserted at end of the list(tail);
-    tail->next = temp;        // tail node next pointer should point to the temp;
-    temp->prev = tail;        // temp node prev pointer will point to the tail;
-    tail = temp;              // Now the new node temp will be the tail of the linked list;
+    if (tail == NULL)
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        tail->next = temp; // tail node next pointer should point to the temp;
+        temp->prev = tail; // temp node prev pointer will point to the tail;
+        tail = temp;       // Now the new node temp will be the tail of the linked list;
+    }
 }
 
-void InsAtPos(Node *&head, int pos, int d) // FUnction to add a node at any positon;
+void InsAtPos(Node *&head, Node *&tail, int pos, int d) // FUnction to add a node at any positon;
 {
     if (pos == 1) // If the position is 1 i.e start of the list
     {
-        InsHead(head, d); // Call the InsHead function;
+        InsHead(head, tail, d); // Call the InsHead function;
     }
     else
     {
@@ -61,9 +75,9 @@ void Delete(Node *&head, int pos)
     if (pos == 1)
     {
         Node *temp = head;
+        head = temp->next;
         temp->next->prev = NULL;
         temp->next = NULL;
-        head = temp->next;
         delete temp;
     }
     else
@@ -97,9 +111,10 @@ void display(Node *&head)
     }
     while (temp != NULL) // As long as temp is not empty print data of LL and increment the position of temp;
     {
-        cout << temp->data << " "; // Printing data;
-        temp = temp->next;         // Incrementing position aka travelling forward;
+        cout << temp->data << " -> "; // Printing data;
+        temp = temp->next;            // Incrementing position aka travelling forward;
     }
+    cout << "NULL" << endl;
 }
 
 int GetLen(Node *&head) // To find the length of the list;
@@ -118,20 +133,13 @@ int main()
     Node *N1 = new Node(10);
     Node *head = N1;
     Node *tail = N1;
-
-    // InsTail(tail, 12);
-    // InsTail(tail, 15);
-    // InsTail(tail, 19);
-    // InsTail(tail, 21);
-    // display(head);
-    // cout << endl;
-    // InsAtPos(head, 1, 90);
-    // display(head);
-    // cout << endl;
-    cout << GetLen(head) << endl;
-    // InsHead(head, 20);
-    // InsHead(head, 30);
-    // InsHead(head, 40);
-    // InsHead(head, 50);
-    // display(head);
+    InsTail(head, tail, 12);
+    InsTail(head, tail, 15);
+    InsTail(head, tail, 19);
+    InsTail(head, tail, 21);
+    display(head);
+    Delete(head, 1);
+    display(head);
+    Delete(head, 1);
+    display(head);
 }
