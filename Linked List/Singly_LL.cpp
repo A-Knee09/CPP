@@ -26,12 +26,18 @@ public:
 class Single // Seperate class for all single linked list function.
 {
 public:
-    void InsHead(Node *&head, int d) // Function to insert a node at the beginning of the list or head of the Linked list.
+    void InsHead(Node *&head, Node *&tail, int d) // Function to insert a node at the beginning of the list or head of the Linked list.
     {
-
         Node *temp = new Node(d); // Create a new Node 'temp'
-        temp->next = head;        // New Node(temp) next pointer should point to the orignal head of the list.
-        head = temp;              // New Node(temp) should now be assigned as the head of list.
+        if (head == NULL)
+        {
+            head = tail = temp;
+        }
+        else
+        {
+            temp->next = head; // New Node(temp) next pointer should point to the orignal head of the list.
+            head = temp;       // New Node(temp) should now be assigned as the head of list.
+        }
     }
 
     void InsTail(Node *&head, Node *&tail, int d) // Function to insert a node at end or tail of the linked list.
@@ -49,11 +55,11 @@ public:
         }
     }
 
-    void InsAtPos(Node *&head, int pos, int d) // Function to insert a node at any position.
+    void InsAtPos(Node *&head, Node *&tail, int pos, int d) // Function to insert a node at any position.
     {
         if (pos == 1) // If node is to be inserted at the beginning of the list
         {
-            InsHead(head, d); // Call the InsHead function
+            InsHead(head, tail, d); // Call the InsHead function
             return;
         }
         else // If node is to be inserted at any other position
@@ -67,7 +73,7 @@ public:
             }
             Node *NTI = new Node(d); // Once the desired position has been reached create a new node NTI
             NTI->next = temp->next;  // New Node NTI next pointer should point to temp's next node.
-            temp->next = NTI;        // The node before the desired position or temp's next pointer should point to our new Node
+            temp->next = NTI;        // The node before the desired position or temp's next pointer should point to our new Node.
         }
     }
 
@@ -140,19 +146,12 @@ public:
 int main()
 {
     // Node *N1 = new Node(0);
+    Single *s1 = new Single;
     Node *head = NULL;
     Node *tail = NULL;
-    Single *s1 = new Single;
+    s1->InsAtPos(head, tail, 1, 20);
     s1->Display(head);
-    s1->InsTail(head, tail, 20);
-    s1->InsTail(head, tail, 30);
-    s1->InsTail(head, tail, 40);
-    s1->InsTail(head, tail, 50);
-    s1->Delete(head, 1);
+    s1->InsTail(head, tail, 10);
+    s1->InsAtPos(head, tail, 2, 29);
     s1->Display(head);
-    s1->Delete(head, 1);
-    s1->Display(head);
-    s1->GetLen(head);
-    // s1->Delete(head, 1);
-    // s1->Display(head);
 }
