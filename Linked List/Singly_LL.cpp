@@ -71,6 +71,10 @@ public:
                 temp = temp->next; // traverse by incrementing the position.
                 count++;
             }
+            if(temp -> next == NULL)
+            {
+                cout<<"Cannot insert element here. Please redefine postion."<<endl;
+            }
             Node *NTI = new Node(d); // Once the desired position has been reached create a new node NTI
             NTI->next = temp->next;  // New Node NTI next pointer should point to temp's next node.
             temp->next = NTI;        // The node before the desired position or temp's next pointer should point to our new Node.
