@@ -30,19 +30,17 @@ class stack
 public:
     void push(Node *&head, int d)
     {
-        Node *temp = head;
-        if (temp == NULL)
+        Node *temp = new Node(d);
+        if (head == NULL)
         {
-            Node *N = new Node(d);
-            head = N;
+            head = temp;
         }
 
         else
         {
-            Node *N = new Node(d);
-            N->next = head;
-            head->prev = N;
-            head = N;
+            temp->next = head;
+            head->prev = temp;
+            head = temp;
         }
     }
 
