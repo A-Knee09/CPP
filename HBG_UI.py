@@ -305,13 +305,7 @@ class Hospital:
         end = messagebox.askyesno("Hospital Management System","Are you sure you want to exit the program")
         if end>0:
             root.destroy()
-            return
-        
-            
-    
-    
-    
-    
+            return   
        
 root = Tk()
 obj = Hospital(root)
