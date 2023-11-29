@@ -23,6 +23,9 @@ void reverse(int arr[], int n)
     int end = n-1;
     while (start <= end)
     {
+        // int temp = arr[start];
+        // arr[start] = arr[end];
+        // int arr[end] = temp;
         swap(arr[start], arr[end]);
         start++;
         end--;
