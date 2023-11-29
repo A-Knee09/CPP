@@ -14,6 +14,16 @@ public:
         this->prev = NULL; // First node will point to no previous node;
         this->next = NULL; // First node will point to no next node;
     }
+
+    ~Node()
+    {
+        if(this -> next != NULL)
+        {
+            delete next;
+            this -> next = NULL;
+        }
+    }
+    
 };
 
 void InsHead(Node *&head, Node *&tail, int d) // Function for Inserting a node at head;
