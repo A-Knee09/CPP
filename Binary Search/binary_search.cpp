@@ -1,61 +1,69 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-void Input(int arr[] , int size)
+class array
 {
-    for (int i = 0; i < size; i++)
+public:
+    void Inp(int *arr, int n)
     {
-       cin>>arr[i];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+        cout << endl;
     }
-    
-}
-void PrintArr(int arr[] , int size)
+    void Out(int *arr, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+class Binary
 {
-    for(int i=0; i<size; i++)
+public:
+    int Search(int *arr, int n, int key)
     {
-        cout<<arr[i]<<" ";
+
+        int s = 0;
+        int e = n - 1;
+        int mid = s + (e - s) / 2;
+
+        while (s <= e)
+        {
+            if (arr[mid] == key)
+            {
+                return mid;
+            }
+            else if (arr[mid] < key)
+            {
+                s = mid + 1;
+            }
+            else
+            {
+                e = mid - 1;
+            }
+
+            mid = s + (e - s) / 2;
+        }
+        return -1;
     }
-}
-int BinarySearch(int arr[], int size , int key)
-{
-    int start = 0 ;
-    int end = size-1;
-    int mid = start+(end-start)/2;
-    while(start<=end)
-    {
-        if(arr[mid]==key)
-        {
-            return mid;
-        }
-        //To go to the right wala part
-        //start update
-        if(key>arr[mid])
-        {
-            start = mid+1;
-        }
-        //To go to left wala part
-        //end update
-        else
-        {
-            end = mid-1;
-        }
-        //mid update
-        mid = start+(end-start)/2;
-    }
-    return -1;
-}
+};
+
 int main()
 {
-    int len,arr[1000];
-    cout<<"Enter the lenght of the array: ";
-    cin>>len;
-    Input(arr,len);
-    cout<<"The array is: ";
-    PrintArr(arr , len);
-    cout<<endl;
-    int key;
-    cout<<"Enter the key: ";
-    cin>>key;
-    int index = BinarySearch(arr , len ,key);
-    cout<<"The key "<<key<<" is present at "<<index<<" index";
-} 
+    array *a = new array;
+    Binary *b = new Binary;
+    int n, key;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    int *arr = new int[n];
+    a->Inp(arr, n);
+    cout << "Enter the key: ";
+    cin >> key;
+    int index = b->Search(arr, n, key);
+    cout << "key found at position: " << index + 1 << endl;
+}
