@@ -1,48 +1,57 @@
 #include <iostream>
 using namespace std;
-void InpArray(int arr[], int size)
-{
-    for (int i = 0; i < size; i++)
-    {
-        cin >> arr[i];
-    }
-}
-void Printarray(int arr[], int size)
-{
 
-    for (int i = 0; i < size; i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-}
-
-void reverse(int arr[], int n)
+class array
 {
-    int start = 0;
-    int end = n-1;
-    while (start <= end)
+public:
+    void Inp(int *arr, int n)
     {
-        // int temp = arr[start];
-        // arr[start] = arr[end];
-        // int arr[end] = temp;
-        swap(arr[start], arr[end]);
-        start++;
-        end--;
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+        cout << endl;
     }
-}
+    void Out(int *arr, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+class reverse
+{
+public:
+    void rev(int *arr, int n)
+    {
+        int s = 0;
+        int e = n - 1;
+        while (s <= e)
+        {
+            int temp = arr[s];
+            arr[s] = arr[e];
+            arr[e] = temp;
+            s++;
+            e--;
+        }
+    }
+};
+
 int main()
 {
-    int len;
-    int arr[100];
-    cout << "Enter the lenght of the array: ";
-    cin >> len;
-    InpArray(arr, len);
-    cout << "The array is: ";
-    Printarray(arr, len);
-
-    cout << "Reversed array is: ";
-    reverse(arr, len);
-    Printarray(arr, len);
-    cin.get();
+    array *a = new array;
+    reverse *r = new reverse;
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    int *arr = new int[n];
+    a->Inp(arr, n);
+    cout << "Orignal array: ";
+    a->Out(arr, n);
+    r->rev(arr, n);
+    cout << "Reversed array: ";
+    a->Out(arr, n);
 }
