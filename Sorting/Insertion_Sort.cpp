@@ -1,32 +1,34 @@
 #include <iostream>
 using namespace std;
 
-class sort
+class array
 {
-private:
-    int i;
-    int j;
-    int temp;
-
 public:
-    void Inp(int arr[], int n)
+    void Inp(int *arr, int n)
     {
-        for (i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             cin >> arr[i];
         }
+        cout << endl;
     }
-
-    void Out(int arr[], int n)
+    void Out(int *arr, int n)
     {
-        for (i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             cout << arr[i] << " ";
         }
+        cout << endl;
     }
+};
 
-    void Ins(int arr[], int n)
+class Insertion
+{
+public:
+    void sort(int *arr, int n)
     {
+        int i, j, temp;
+
         for (i = 1; i < n; i++)
         {
             temp = arr[i];
@@ -43,13 +45,16 @@ public:
 
 int main()
 {
-    sort s;
-    int arr[100], n;
+    array *a = new array;
+    Insertion *s = new Insertion;
+    int n;
     cout << "Enter the size of the array: ";
     cin >> n;
-    cout << "Enter the elements of the array" << endl;
-    s.Inp(arr, n);
-    s.Ins(arr, n);
-    cout << "Sorted array is: ";
-    s.Out(arr, n);
+    int *arr = new int[n];
+    a->Inp(arr, n);
+    cout << "Orignal array: ";
+    a->Out(arr, n);
+    cout << "Sorted array: ";
+    s->sort(arr, n);
+    a->Out(arr, n);
 }
