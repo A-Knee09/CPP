@@ -79,14 +79,25 @@ public:
         }
     }
 
-    void display() // Displays all elements of the stack;
+    int Length()
     {
-        while (top >= 0)
+        return top + 1;
+    }
+
+    void print()
+    {
+        if (top == -1)
         {
-            cout << arr[top] << " ";
-            top--;
+            cout << "Stack is empty." << endl;
         }
-        cout << endl;
+        else
+        {
+            for (int i = top; i >= 0; i--)
+            {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
+        }
     }
 };
 
