@@ -1,49 +1,43 @@
-// Written by Anirudh Saksena
 #include <iostream>
-#include <conio.h>
 using namespace std;
 
-class sort
+class array
 {
-private:
-    int i;
-    int j;
-
 public:
-    void Inp(int arr[], int n)
+    void Inp(int *arr, int n)
     {
-        for (i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             cin >> arr[i];
         }
+        cout << endl;
     }
-
-    void Out(int arr[], int n)
+    void Out(int *arr, int n)
     {
-        for (i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             cout << arr[i] << " ";
         }
+        cout << endl;
     }
+};
 
-    void bubble(int arr[], int n)
+class Bubble
+{
+public:
+    int i, j, temp;
+    void sort(int *arr, int n)
     {
-        for (int i = 0; i < n - 1; i++)
+        for (i = 0; i < n - 1; i++)
         {
-            int swapped = true;
-            for (int j = 0; j < n - i; j++)
+            for (j = 0; j < n - i - 1; j++)
             {
                 if (arr[j] > arr[j + 1])
                 {
-                    int temp = arr[j];
+                    temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
-                    swapped = true;
                 }
-            }
-            if (swapped == false)
-            {
-                break;
             }
         }
     }
@@ -51,16 +45,16 @@ public:
 
 int main()
 {
-    sort s;
-    int arr[100];
+    array *a = new array;
+    Bubble *s = new Bubble;
     int n;
     cout << "Enter the size of the array: ";
     cin >> n;
-    cout << "Enter the array: ";
-    s.Inp(arr, n);
-    s.Out(arr, n);
-    cout << endl;
-    cout << "The sorted array is: ";
-    s.bubble(arr, n);
-    s.Out(arr, n);
+    int *arr = new int[n];
+    a->Inp(arr, n);
+    cout << "Orignal array: ";
+    a->Out(arr, n);
+    cout << "Sorted array: ";
+    s->sort(arr, n);
+    a->Out(arr, n);
 }
