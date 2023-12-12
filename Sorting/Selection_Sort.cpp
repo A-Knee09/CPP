@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class array
+class Array
 {
 public:
     void Inp(int *arr, int n)
@@ -10,7 +10,6 @@ public:
         {
             cin >> arr[i];
         }
-        cout << endl;
     }
     void Out(int *arr, int n)
     {
@@ -22,22 +21,30 @@ public:
     }
 };
 
-class Bubble
+class Selection
 {
 public:
-    int i, j, temp;
-    void sort(int *arr, int n)
+    int i;
+    int j;
+    int min_idx;
+    int temp;
+    void Sort(int *arr, int n)
     {
         for (i = 0; i < n - 1; i++)
         {
-            for (j = 0; j < n - i - 1; j++)
+            min_idx = i;
+            for (j = i + 1; j < n; j++)
             {
-                if (arr[j] > arr[j + 1])
+                if (arr[j] < arr[min_idx])
                 {
-                    temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
+                    min_idx = j;
                 }
+            }
+            if (min_idx != i)
+            {
+                temp = arr[min_idx];
+                arr[min_idx] = arr[i];
+                arr[i] = temp;
             }
         }
     }
@@ -45,16 +52,16 @@ public:
 
 int main()
 {
-    array *a = new array;
-    Bubble *s = new Bubble;
+    Array *a = new Array;
+    Selection *s = new Selection;
     int n;
     cout << "Enter the size of the array: ";
     cin >> n;
     int *arr = new int[n];
     a->Inp(arr, n);
-    cout << "Orignal array: ";
+    cout << "Orignal Array is : ";
     a->Out(arr, n);
-    cout << "Sorted array: ";
-    s->sort(arr, n);
+    cout << "Sorted Array is: ";
+    s->Sort(arr, n);
     a->Out(arr, n);
 }
